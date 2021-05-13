@@ -1,0 +1,40 @@
+#!/gearlock/bin/bash
+function apkmenu() {
+	HEIGHT=20
+	WIDTH=60
+	CHOICE_HEIGHT=20
+	BACKTITLE=$(gecpc "By Xtr" "+")
+	TITLE="Misc tools"
+	MENU="Misc tools"
+
+	OPTIONS=(a "Install multiple apk from folder"
+	         b "Install one apk"
+             c "Install apk specifying abi")
+
+	CHOICE=$(dialog --clear --cancel-label "Exit" \
+	                --backtitle "$BACKTITLE" \
+                    --title "$TITLE" \
+	                --menu "$MENU" \
+	                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+	                "${OPTIONS[@]}" \
+	                2>&1 >/dev/tty)
+
+case $CHOICE in
+    	1)multi_apk;;
+		2)one_apk;;
+		3)abi_apk;;
+}
+
+abi_apk() {
+H
+}
+multi_apk() {
+
+}
+
+one_apk() {
+    
+}
+
+
+apkmenu
