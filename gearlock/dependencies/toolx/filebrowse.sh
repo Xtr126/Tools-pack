@@ -1,6 +1,4 @@
-startdir=/home/xtr
-filext='.png'
-menutitle="Cursor $filext Selection Menu"
+
 
 
 #------------------------------------------------------------------------------
@@ -70,11 +68,9 @@ Filebrowser "$menutitle" "$startdir"
 exitstatus=$?
 if [ $exitstatus -eq 0 ]; then
     if [ "$selection" == "" ]; then
-		Loader
+		$r_action
     else
-	
-		
-			Loader
+    $file_action
 	fi
 fi
-Loader
+$r_action

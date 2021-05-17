@@ -1,11 +1,13 @@
 #!/gearlock/bin/bash
+
 function apkmenu() {
-	HEIGHT=20
+	HEIGHT=0
 	WIDTH=60
-	CHOICE_HEIGHT=20
+	CHOICE_HEIGHT=0
 	BACKTITLE=$(gecpc "By Xtr" "+")
-	TITLE="Misc tools"
-	MENU="Misc tools"
+	TITLE="Apk installer"
+	MENU="Install apk fast with pm, you can install all apks, enter level of subfolders to find apk 
+	Third option is useful for apk that have broken x86 libs and you need to install for ARM"
 
 	OPTIONS=(a "Install multiple apk from folder"
 	         b "Install one apk"
@@ -26,14 +28,18 @@ case $CHOICE in
 }
 
 abi_apk() {
-H
+
 }
+
 multi_apk() {
 
 }
 
 one_apk() {
-    
+startdir=/home/xtr
+filext='.png'
+menutitle="Cursor $filext Selection Menu"
+source $filesdir/filebrowse.sh
 }
 
 
