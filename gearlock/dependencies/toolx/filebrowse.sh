@@ -68,9 +68,9 @@ Filebrowser "$menutitle" "$startdir"
 exitstatus=$?
 if [ $exitstatus -eq 0 ]; then
     if [ "$selection" == "" ]; then
-		$r_action
+	eval "$r_action"
     else
-    $file_action
+    eval "$file_action"
 	fi
 fi
 $r_action
