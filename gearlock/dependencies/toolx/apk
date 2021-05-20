@@ -36,9 +36,13 @@ multi_apk() {
 }
 
 one_apk() {
-startdir=/home/xtr
-filext='.png'
-menutitle="Cursor $filext Selection Menu"
+startdir=/sdcard
+filext='.apk'
+menutitle="APK Selection Menu"
+file_action=\
+'cp "$filepath/$filename" /data/local/tmp/
+pm install "/data/local/tmp/$filename"'
+r_action=apkmenu
 source $filesdir/filebrowse.sh
 }
 
