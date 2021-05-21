@@ -28,7 +28,26 @@ case $CHOICE in
 }
 
 abi_apk() {
+r_action='apkmenu'
 
+	file_action=\
+	mkdir /mnt/"$filename"
+	cd /mnt/"$filename"
+	'7z x "$filepath"/"$filename" 
+	lib_abi_list=($(ls ./lib))
+
+	CHOICE=$(dialog --clear --cancel-label "Exit" \
+	                --backtitle "$BACKTITLE" \
+	                --menu  \
+	                0 45 0 \
+	                "${lib_abi_list[@]}" \
+	                2>&1 >/dev/tty)
+	
+	'
+	startdir=/sdcard
+	filext='.apk'
+	menutitle="Apk Selection Menu"
+	source $filesdir/filebrowse.sh
 }
 
 multi_apk() {
