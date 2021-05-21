@@ -22,7 +22,7 @@ function apkmenu() {
 	                2>&1 >/dev/tty)
 
 case $CHOICE in
-    	1)multi_apk;;
+    	1)source $filesdir/multi_apk;;
 		2)one_apk;;
 		3)abi_apk;;
 }
@@ -31,17 +31,30 @@ abi_apk() {
 r_action='apkmenu'
 
 	file_action=\
-	mkdir /mnt/"$filename"
+	'mkdir /mnt/"$filename"
 	cd /mnt/"$filename"
-	'7z x "$filepath"/"$filename" 
-	lib_abi_list=($(ls ./lib))
+	7z x "$filepath/$filename" 
+	
 
-	CHOICE=$(dialog --clear --cancel-label "Exit" \
+	while read -r line; do
+    lib_abi_list+=($line $line)
+	done < <( ls ./lib )
+    
+	rm -rf /mnt/"$filename"
+
+	MENU="Choose which architecture to install this apk
+			The following abi are supported by your Android x86 
+			$(getprop ro.product.cpu.abilist)"
+
+	abi_choice=$(dialog --clear --cancel-label "Exit" \
 	                --backtitle "$BACKTITLE" \
-	                --menu  \
+	                --menu "$MENU" \
 	                0 45 0 \
 	                "${lib_abi_list[@]}" \
 	                2>&1 >/dev/tty)
+	
+	cp "$filepath/$filename" /data/local/tmp/ 
+	pm install --abi $abi_choice "/data/local/tmp/$filename"  
 	
 	'
 	startdir=/sdcard
@@ -50,9 +63,6 @@ r_action='apkmenu'
 	source $filesdir/filebrowse.sh
 }
 
-multi_apk() {
-
-}
 
 one_apk() {
 startdir=/sdcard
