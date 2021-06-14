@@ -1,1 +1,136 @@
 #!/gearlock/bin/bash
+
+	startdir=/sdcard
+	filext='.apk'
+	menutitle="Go to the folder in which apk are located and choose CurrentFolder"
+#------------------------------------------------------------------------------
+function Filebrowser()
+{
+
+    if [ -z $2 ] ; then
+        dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
+    else
+        cd "$2"
+        dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
+    fi
+	HEIGHT=20
+	WIDTH=0
+	CHOICE_HEIGHT=23
+    curdir=$(pwd)
+    if [ "$curdir" == "/" ] ; then  # Check if you are at root folder
+        selection=$(dialog --title "$1" \
+							  --ok-label Select \
+                              --cancel-label Cancel \
+							  --menu "$curdir" \
+							  $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                              "${dir_list[@]}" 3>&1 1>&2 2>&3)
+    else   # Not Root Dir so show ../ BACK Selection in Menu
+        selection=$(dialog --title "$1" \
+							  --ok-label Go \
+							  --cancel-label Cancel \
+							  --extra-button --extra-label CurrentFolder \
+                              --menu "$curdir" \
+							  $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                              '../' "go back One directory" "${dir_list[@]}" 3>&1 1>&2 2>&3)
+    fi
+
+    RET=$?
+	if [ $RET = 3 ]; then
+     
+     dialog --title "$curdir" --yes-label "Current" --no-label "subfolders" --yesno "Do you want to install apk in current folder or find in subfolders also?" 10 45;
+        case $? in 
+            0)
+             cd "$curdir"
+                DIRS=( *.apk )
+                
+            ;;
+            *)
+
+            if (dialog --title "Do you want to specify maxdepth?" --yesno "You can specify maxdepth, so it will only find apk in that level of subfolders depth, choose no to find all" 9 55); then
+	 i=$(dialog --title "Enter only a number" --inputbox \
+		 	"Enter maxdepth, level of subfolders to find apk" 7 45 3>&2 2>&1 1>&3)
+
+            DIRS=( $(find "$curdir" -maxdepth $i -iname '*.apk') ) 
+	else
+	DIRS=( $(find "$curdir" -iname '*.apk') ) 
+	fi
+           
+           
+            ;;
+        esac
+
+        dialog --gauge "Copying apk" 8 55 < <(
+   n=${#DIRS[*]}; 
+   i=0
+   for f in "${DIRS[@]}"
+   do
+      # calculate progress
+      PCT=$(( 100*(++i)/n ))
+      # update dialog box 
+cat <<EOF
+XXX
+$PCT
+$f...
+XXX
+EOF
+  # copy file $f to $DEST 
+  cp "$f" /data/local/tmp/ &>/dev/null
+   done
+)
+
+cd /data/local/tmp/
+
+APKS=( *.apk )
+dialog --gauge "Installing apk" 8 55 < <(
+   n=${#APKS[*]}; 
+   i=0
+   for f in "${APKS[@]}"
+   do
+      # calculate progress
+      PCT=$(( 100*(++i)/n ))
+      # update dialog box 
+cat <<EOF
+XXX
+$PCT
+$f...
+XXX
+EOF
+  
+  pm install "$f" &>/dev/null
+   done
+)
+
+
+	fi
+
+    if [ $RET -eq 1 ]; then  # Check if User Selected Cancel
+       return 1	
+    elif [ $RET -eq 0 ]; then
+       if [[ -d "$selection" ]]; then  # Check if Directory Selected
+          Filebrowser "$1" "$selection"
+       elif [[ -f "$selection" ]]; then  # Check if File Selected
+        
+             dialog --msgbox "$selection\nYou Must go to a folder and Choose currentfolder" 7 45
+             Filebrowser "$1" "$curdir"
+         
+       else
+          # Could not detect a file or folder so Try Again
+          dialog --title "ERROR: Selection Error" \
+                 --msgbox "Error Changing to Path $selection" 7 45
+				 Filebrowser "$1" "$curdir"
+       fi
+    fi
+}
+
+
+Filebrowser "$menutitle" "$startdir"
+
+exitstatus=$?
+if [ $exitstatus -eq 0 ]; then
+    if [ "$selection" == "" ]; then
+	eval "$r_action"
+    else
+    eval "$file_action"
+	fi
+fi
+$r_action

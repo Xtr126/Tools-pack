@@ -11,7 +11,7 @@ function Lightning() {
 	MENU="Misc tools"
 
 	OPTIONS=(1 "Find and batch install all apks in folder"
-	         2 "Extract gxp or other archive to RAM (faster)"
+	         2 "Extract gxp or other archive"
 	         3 "Backup directory with tar"
 	         4 "Make gxp which plays your own video and audio"
 			 5 "Change boot sound to your own from wav file"

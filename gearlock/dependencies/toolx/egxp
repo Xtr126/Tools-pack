@@ -1,1 +1,17 @@
 #!/gearlock/bin/bash
+
+dialog --title "Warning" \
+--ok-label "I read and understand" \
+--msgbox "This doesnt extract archive to hard disk like other programs
+It will extract files to RAM, so dont extract large archives which will fill your RAM and make the OS crash
+Archives or gxp are extracted to /mnt/<archive name> which is tmpfs (/mnt/ is a folder in which files are stored in RAM, lost after reboot, in recovery mode /tmp)" \
+13 60
+
+startdir=/sdcard
+filext=''
+menutitle="Archive Selection Menu"
+file_action=\
+'mkdir /mnt/$filename
+7z x "$filepath/$filename" -o/mnt/$filename'
+r_action=apkmenu
+source $filesdir/filebrowse.sh
