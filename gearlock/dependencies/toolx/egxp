@@ -13,5 +13,6 @@ menutitle="Archive Selection Menu"
 file_action=\
 'mkdir /mnt/$filename
 7z x "$filepath/$filename" -o/mnt/$filename'
-r_action=apkmenu
+r_action=Loader
+
 source $filesdir/filebrowse.sh

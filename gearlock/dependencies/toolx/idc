@@ -1,1 +1,28 @@
 #!/gearlock/bin/bash
+
+device_names="$(cat /proc/bus/input/devices | grep "N: Name" | awk '{$1=""}1')"
+
+input_devices=()
+
+i=0
+
+while read -r line; do # process file by file
+    eval "$line"
+    let i=$i+1
+    input_devices+=("$Name" $i)
+
+done < <( echo "$device_names" )
+
+    HEIGHT=0
+	WIDTH=60
+	CHOICE_HEIGHT=0
+	BACKTITLE=$(gecpc "By Xtr" "+")
+	TITLE="Input device configurator"
+	MENU="Select your touchpad to configure"
+	CHOICE=$(dialog --clear --cancel-label "Exit" \
+	                --backtitle "$BACKTITLE" \
+                    --title "$TITLE" \
+	                --menu "$MENU" \
+	                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+	                "${input_devices[@]}" \
+	                2>&1 >/dev/tty)

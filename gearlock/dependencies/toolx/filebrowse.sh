@@ -71,6 +71,7 @@ if [ $exitstatus -eq 0 ]; then
 	eval "$r_action"
     else
     eval "$file_action"
-	fi
+	fi  
 fi
 $r_action
+ 
