@@ -2,7 +2,7 @@
 
 filesdir="$DEPDIR/toolx"
 
-function Lightning() {
+function Main_menu() {
 	HEIGHT=0
 	WIDTH=60
 	CHOICE_HEIGHT=0
@@ -12,7 +12,7 @@ function Lightning() {
 
 	OPTIONS=(1 "Find and batch install all apks in folder"
 	         2 "Extract gxp or other archive"
-	         3 "Backup directory with tar"
+	         3 "x"
 	         4 "Make gxp which plays your own video and audio"
 			 5 "Change boot sound to your own from wav file"
 			 6 "Input device configurator"
@@ -29,7 +29,7 @@ function Lightning() {
     case $CHOICE in
     	1)source $filesdir/apk;;
 		2)source $filesdir/egxp;;
-		3)source $filesdir/tar;;
+		3)source $filesdir/x;;
 		4)source $filesdir/gxp;;
 		5)source $filesdir/bootsound;;
 		6)source $filesdir/idc;;
@@ -59,7 +59,7 @@ done
 ) |
 
 dialog "$@" --gauge "Hi, thanks" 12 45 0; sleep 0.5
-Lightning
+Main_menu
 
 }
 

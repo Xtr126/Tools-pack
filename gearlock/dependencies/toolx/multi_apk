@@ -51,15 +51,16 @@ function Filebrowser()
 		 	"Enter maxdepth, level of subfolders to find apk" 7 45 3>&2 2>&1 1>&3)
 
             DIRS=( $(find "$curdir" -maxdepth $i -iname '*.apk') ) 
-	else
-	DIRS=( $(find "$curdir" -iname '*.apk') ) 
-	fi
+            else
+            DIRS=( $(find "$curdir" -iname '*.apk') ) 
+	        
+            fi
            
            
             ;;
         esac
 
-        dialog --gauge "Copying apk" 8 55 < <(
+        dialog --gauge "Copying apk" 6 55 < <(
    n=${#DIRS[*]}; 
    i=0
    for f in "${DIRS[@]}"
@@ -81,7 +82,7 @@ EOF
 cd /data/local/tmp/
 
 APKS=( *.apk )
-dialog --gauge "Installing apk" 8 55 < <(
+dialog --gauge "Installing apk" 6 55 < <(
    n=${#APKS[*]}; 
    i=0
    for f in "${APKS[@]}"
@@ -99,7 +100,7 @@ EOF
   pm install "$f" &>/dev/null
    done
 )
-
+dialog --msgbox "Delete copied apks in /data/local/tmp if needed" 7 45 && exit
 
 	fi
 
@@ -123,14 +124,7 @@ EOF
 }
 
 
-Filebrowser "$menutitle" "$startdir"
+Filebrowser "$menutitle" "$startdir" 
+apkmenu
 
-exitstatus=$?
-if [ $exitstatus -eq 0 ]; then
-    if [ "$selection" == "" ]; then
-	eval "$r_action"
-    else
-    eval "$file_action"
-	fi
-fi
-$r_action
+

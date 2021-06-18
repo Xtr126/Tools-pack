@@ -40,17 +40,20 @@ function Filebrowser()
                               "${dir_list[@]}" 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(dialog --title "$1" \
-							  --ok-label Select \
+							  --ok-label ApplySound \
 							  --cancel-label Cancel \
-							  --extra-button --extra-label Back \
+							  --extra-button --extra-label PlaySound \
                               --menu "$curdir" \
 							  $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                              '../' "Go back one directory"
                               "${dir_list[@]}" 3>&1 1>&2 2>&3)
     fi
 
     RET=$?
 	if [ $RET = 3 ]; then
-	Filebrowser "$1" "../"
+	filename="$selection"
+    filepath="$curdir"
+    alsa_aplay "${filepath}/${filename}" && Filebrowser "$1" "$curdir"
 	fi
     if [ $RET -eq 1 ]; then  # Check if User Selected Cancel
        return 1	

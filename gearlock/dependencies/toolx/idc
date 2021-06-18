@@ -12,7 +12,6 @@ while read -r line; do # process file by file
     input_devices+=("$Name" $i)
 
 done < <( echo "$device_names" )
-
     HEIGHT=0
 	WIDTH=60
 	CHOICE_HEIGHT=0
@@ -26,3 +25,75 @@ done < <( echo "$device_names" )
 	                $HEIGHT $WIDTH $CHOICE_HEIGHT \
 	                "${input_devices[@]}" \
 	                2>&1 >/dev/tty)
+	
+	idc_name=${CHOICE//[^a-zA-Z0-9-_]/_}
+	dialog --msgbox "This configuration file will be saved in
+	/data/system/devices/idc/${idc_name}
+	Other idc files are located at /system/usr/idc/" 7 60
+	WIDTH=80
+	OPTIONS=( touchScreen "touch screen associated with a display, can be used for games"
+				touchPad "touch pad not associated with a display."
+				pointer "motions are used for indirect multi-touch pointer gestures."
+				default "system automatically detects the device type" )
+	
+		MENU="specify the touch device type"
+	CHOICE=$(dialog --clear --cancel-label "Exit" \
+	                --backtitle "$BACKTITLE" \
+                    --title "$TITLE" \
+	                --menu "$MENU" \
+	                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+	                "${OPTIONS[@]}" \
+	                2>&1 >/dev/tty)
+				WIDTH=60
+		
+		echo "touch.deviceType = ${CHOICE}" > /data/system/devices/idc/${idc_name}
+
+		if (dialog --yesno "the touch device should react to display orientation changes?" 7 45); then
+				echo "touch.orientationAware = 1" >> /data/system/devices/idc/${idc_name}
+            else
+                echo "touch.orientationAware = 0" >> /data/system/devices/idc/${idc_name}
+        fi
+
+		if (dialog --title "specify device.internal" \
+		--yes-label "internal" \
+		--no-label "external" \
+		--yesno "the input device should behave like an internal built-in component or external?
+		Internal input devices generally do not wake the display from sleep
+		choose no if you want touchpad to work in keymapper" 10 60); then
+				echo "device.internal = 1" >> /data/system/devices/idc/${idc_name}
+            else
+                echo "device.internal = 0" >> /data/system/devices/idc/${idc_name}
+        fi
+
+		if (dialog --title "Apply changes" \
+		--yes-label "Reload module" \
+		--no-label "Manual reboot" \
+		--yesno "If you know the kernel module your touchpad uses ( might be psmouse, hid-multitouch, i2c hid or something like that) then you can reload the kernel module to apply changes (experimental) or just manually reboot" 10 55); then
+				
+									
+				i=0
+				OPTIONS=()
+				while read -r line; do # process file by file
+				let i=$i+1
+				OPTIONS+=($line $i)
+				done < <( lsmod | awk '{print $1}' )
+				    HEIGHT=0
+					WIDTH=45
+					CHOICE_HEIGHT=0
+				MENU="select kernel module to unload and reload"
+				CHOICE=$(dialog --clear --cancel-label "Exit" \
+								--backtitle "$BACKTITLE" \
+								--title "$TITLE" \
+								--menu "$MENU" \
+								$HEIGHT $WIDTH $CHOICE_HEIGHT \
+								"${OPTIONS[@]}" \
+								2>&1 >/dev/tty)
+
+					
+					rmmod ${CHOICE} && modprobe ${CHOICE}
+					exit
+
+            else
+				exit
+        fi
+			

@@ -19,10 +19,10 @@ if [ -d "/system/ghome/.local/bin" ]
 then  
     HOME=/system/ghome
 else
-   HOME=/data/ghome  
+    HOME=/data/ghome  
 fi
 
-mv -t /data/data/com.termux/files/usr/bin/ $HOME/.local/bin/*
+mv -t "/data/data/com.termux/files/usr/bin/" $HOME/.local/bin/*
 rm -rf $HOME/.local/bin
 ln -s /data/data/com.termux/files/usr/bin $HOME/.local/bin
 dialog --msgbox "symlinked termux to gearlock, you can access termux from alt+f8 terminal, type fish or zsh python and enter in alt+f8 terminal"

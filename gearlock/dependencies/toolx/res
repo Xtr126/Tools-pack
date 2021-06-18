@@ -1,1 +1,22 @@
 #!/gearlock/bin/bash
+
+if (dialog --yes-label "Extract" --no-label "Repack" \ 
+--yesno "Extract framework-res to modify icons/drawables, after done editing the files then repack, will add new files to /sysyem/framework/framework-res.apk" 7 45); then
+				mkdir /mnt/framework-res/
+                7z x /system/framework/framework-res.apk -o/mnt/framework-res/
+                cp -r /mnt/framework-res/res /sdcard/
+                rm -rf /mnt/framework-res
+            else
+                cd /sdcard/
+
+                (pv -n /system/framework/framework-res.apk > /sdcard/framework-res.apk) 2>&1 | \
+		dialog --title "Preparing system framework" --gauge \
+		"Making a copy of /system/framework/framework-res.apk" 8 60; sleep 1
+                7z a framework-res.apk res/
+                rm framework-res.apk
+
+                (pv -n framework-res.apk > /system/framework/framework-res.apk) 2>&1 | \
+		dialog --gauge \
+		"Installing patched system framework" 7 45; sleep 1
+
+        fi
