@@ -11,6 +11,4 @@ check_compat 7.2.22
 # Ensure compatible GearLock version
 
 geco "==== Tool pack by Xtr,
-Developed with hours of patience 
-==== Use it from gearlock> run gearlock extensions
-==== Use it from gearlock extensions menu after installation, enjoy!"
+==== Use it from gearlock> run gearlock extensions"

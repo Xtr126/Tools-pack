@@ -1,8 +1,0 @@
-0755 "install.sh"
-0755 "!zygote.sh"
-0775 ".!zygote"
-0664 ".!zygote/mode"
-0755 "gearlock"
-0755 "gearlock/pubg.exe"
-0755 "gearlock/gameloop.exe"
-0755 "gearlock/tencent.exe"

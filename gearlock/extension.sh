@@ -13,8 +13,8 @@ function Main_menu() {
 	OPTIONS=(1 "Find and batch install all apks in folder"
 	         2 "Extract gxp or other archive"
 	         3 "x"
-	         4 "Make gxp which plays your own video and audio"
-			 5 "Change boot sound to your own from wav file"
+	         4 "Make gxp"
+			 5 "Change boot sound(only .wav)"
 			 6 "Input device configurator"
 			 7 "Install zsh/fish/python shell to alt+f8 console"
 			 8 "Modify framework-res (ui icons)")
