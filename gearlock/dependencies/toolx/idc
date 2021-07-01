@@ -28,8 +28,7 @@ done < <( echo "$device_names" )
 	
 	idc_name=${CHOICE//[^a-zA-Z0-9-_]/_}
 	dialog --msgbox "This configuration file will be saved in
-	/data/system/devices/idc/${idc_name}
-	Other idc files are located at /system/usr/idc/" 7 60
+	/system/usr/idc/${idc_name}" 7 45
 	WIDTH=80
 	OPTIONS=( touchScreen "touch screen associated with a display, can be used for games"
 				touchPad "touch pad not associated with a display."
@@ -46,12 +45,23 @@ done < <( echo "$device_names" )
 	                2>&1 >/dev/tty)
 				WIDTH=60
 		
-		echo "touch.deviceType = ${CHOICE}" > /data/system/devices/idc/${idc_name}
+		echo "touch.deviceType = ${CHOICE}" > /system/usr/idc/${idc_name}
 
 		if (dialog --yesno "the touch device should react to display orientation changes?" 7 45); then
-				echo "touch.orientationAware = 1" >> /data/system/devices/idc/${idc_name}
+				echo "touch.orientationAware = 1" >> /system/usr/idc/${idc_name}
             else
-                echo "touch.orientationAware = 0" >> /data/system/devices/idc/${idc_name}
+                echo "touch.orientationAware = 0" >> /system/usr/idc/${idc_name}
+        fi
+
+		if (dialog --title "specify touch.gestureMode" \
+		--yes-label "pointer" \
+		--no-label "spots" \
+		--yesno "If the value is pointer, the touch pad gestures are presented by way of a cursor similar to a mouse pointer.
+
+    If the value is spots, the touch pad gestures are presented by an anchor that represents the centroid of the gesture and a set of circular spots that represent the position of individual fingers." 11 60); then
+				echo "touch.gestureMode = pointer" >> /system/usr/idc/${idc_name}
+            else
+                echo "touch.gestureMode = spots" >> /system/usr/idc/${idc_name}
         fi
 
 		if (dialog --title "specify device.internal" \
@@ -59,11 +69,38 @@ done < <( echo "$device_names" )
 		--no-label "external" \
 		--yesno "the input device should behave like an internal built-in component or external?
 		Internal input devices generally do not wake the display from sleep
-		choose no if you want touchpad to work in keymapper" 10 60); then
-				echo "device.internal = 1" >> /data/system/devices/idc/${idc_name}
+		i recommend to choose external" 10 60); then
+				echo "device.internal = 1" >> /system/usr/idc/${idc_name}
             else
-                echo "device.internal = 0" >> /data/system/devices/idc/${idc_name}
+                echo "device.internal = 0" >> /system/usr/idc/${idc_name}
         fi
+
+dialog --title "touch.size.calibration" \
+		--ok-label "none" \
+		--cancel-label "geometric" \
+		--help-button --help-label "diameter" \
+		--extra-button --extra-label "area" \
+		--yesno \
+		"Specify the kind of measurement used by the touch driver to report the touch size and tool size.
+none- the size is set to zero.
+geometric- the size is assumed to be specified in the same surface units as the position, so it is scaled in the same manner.
+diameter- the size is assumed to be proportional to the diameter (width) of the touch or tool.
+area- the size is assumed to be proportional to the area of the touch or tool." 15 60
+
+		case $? in
+
+			0)echo "touch.size.calibration = none" >> /system/usr/idc/${idc_name};;
+
+			1)echo "touch.size.calibration = geometric" >> /system/usr/idc/${idc_name};;
+
+			2)echo "touch.size.calibration = area" >> /system/usr/idc/${idc_name};;
+
+			3)echo "touch.size.calibration = diameter" >> /system/usr/idc/${idc_name};;
+
+			*);;
+
+		esac
+
 
 		if (dialog --title "Apply changes" \
 		--yes-label "Reload module" \
