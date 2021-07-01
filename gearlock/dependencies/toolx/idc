@@ -68,7 +68,7 @@ done < <( echo "$device_names" )
 		if (dialog --title "Apply changes" \
 		--yes-label "Reload module" \
 		--no-label "Manual reboot" \
-		--yesno "If you know the kernel module your touchpad uses ( might be psmouse, hid-multitouch, i2c hid or something like that) then you can reload the kernel module to apply changes (experimental) or just manually reboot" 10 55); then
+		--yesno "If you know the kernel module your touchpad uses ( might be psmouse, hid-multitouch, i2c_hid or something like that) then you can reload the kernel module to apply changes (experimental) or just manually reboot" 10 55); then
 				
 									
 				i=0

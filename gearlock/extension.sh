@@ -12,12 +12,13 @@ function Main_menu() {
 
 	OPTIONS=(1 "Find and batch install all apks in folder"
 	         2 "Extract gxp or other archive"
-	         3 "x"
+	         3 "Disable/enable boot animation"
 	         4 "Make gxp"
 			 5 "Change boot sound(only .wav)"
 			 6 "Input device configurator"
 			 7 "Install zsh/fish/python shell to alt+f8 console"
-			 8 "Modify framework-res (ui icons)")
+			 8 "Modify framework-res (ui icons)"
+			 9 "Free up some RAM")
 
 	CHOICE=$(dialog --clear --cancel-label "Exit" \
 	                --backtitle "$BACKTITLE" \
@@ -29,12 +30,21 @@ function Main_menu() {
     case $CHOICE in
     	1)source $filesdir/apk;;
 		2)source $filesdir/egxp;;
-		3)source $filesdir/x;;
+		3)	
+			if (dialog --yes-label Disable --no-label Enable \
+			--yesno "Disables boot animation with build.prop line, useful for fast boot/ SSD" 7 45); then
+				gearprop "debug.sf.nobootanimation 1"
+			else 
+				gearprop "debug.sf.nobootanimation 0"
+		;;
 		4)source $filesdir/gxp;;
 		5)source $filesdir/bootsound;;
 		6)source $filesdir/idc;;
 		7)source $filesdir/zsh;;
 		8)source $filesdir/res;;
+		9)
+			echo 3 > /proc/sys/vm/drop_caches
+		;;
 		*);;
 	esac
 }

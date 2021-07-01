@@ -1,28 +1,43 @@
 #!/gearlock/bin/bash
 
+if [ -d /tmp ]; then
+    tmp_dir=/tmp
+else
+    tmp_dir=/mnt
+fi
+
 dialog --msgbox "Reverse engineered from Gameloop_lobby.gxp by AXON
 This allows you to create a gxp file which plays your own video and audio when installed, this is intended for entertainment purposes
 Only gif and wav files are supported" 10 60
 
-7z x $DEPDIR/gxp_files.zip -o"/mnt"
+7z x $filesdir/gxp_files.zip -o"$tmp_dir"
 
 startdir=/sdcard
 filext='.wav'
 menutitle="Select audio(only wav)"
-file_action='cat "$filepath/$filename" > /mnt/gxp_files/gearlock/vi.wav'
-r_action=Loader
+file_action() {
+    cat "$filepath/$filename" > $tmp_dir/gxp_files/gearlock/vi.wav
+    }
 
-source $filesdir/filebrowse.sh
+r_action() {
+    Loader
+    }
+    
+    source $filesdir/filebrowse.sh
 
 filext='.gif'
 menutitle="Select video(only gif)"
-file_action='cat "$filepath/$filename" > /mnt/gxp_files/gearlock/vid.gif'
+file_action() {
+    cat "$filepath/$filename" > $tmp_dir/gxp_files/gearlock/vid.gif
+    }
+
+source $filesdir/filebrowse.sh
 
 cd $GHOME; mv workdir workdir.backup; mkdir workdir
-mv -t "$GHOME/workdir/" /mnt/gxp_files/*
-rm -r /mnt/gxp_files
+mv -t "$GHOME/workdir/" $tmp_dir/gxp_files/*
+rm -r $tmp_dir/gxp_files
 
-dialog --msgbox "Now go to gearlock > more > 3 dev zone > 2 Build & pack the custom package"
+dialog --msgbox "Now go to gearlock > more > 3 dev zone > 2 Build & pack the custom package" 7 45
 
 
 

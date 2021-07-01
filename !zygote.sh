@@ -12,7 +12,7 @@ AUTHOR="Xtr" #Your name as the Developer/Owner/Packer
 
 VERSION="1.0" #Specify the Version of this package/extension
 
-SHORTDESC="misc tools pack by xtr, more to come" #Provide a short description about this package/extension
+SHORTDESC="misc tools pack by xtr" #Provide a short description about this package/extension
 
 C_EXTNAME="Misc_tools" #For Specifing a custom name for your extension script ($NAME is used if not defined)
 

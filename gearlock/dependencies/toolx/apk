@@ -3,7 +3,7 @@
 function apkmenu() {
 	HEIGHT=0
 	WIDTH=60
-	CHOICE_HEIGHT=0
+	CHOICE_HEIGHT=6
 	BACKTITLE=$(gecpc "By Xtr" "+")
 	TITLE="Apk installer"
 	MENU="Install apk fast with pm, you can install all apks, enter level of subfolders to find apk 
@@ -22,20 +22,26 @@ function apkmenu() {
 	                2>&1 >/dev/tty)
 
 case $CHOICE in
-    	1)source $filesdir/multi_apk;;
-		2)one_apk;;
-		3)abi_apk;;
+    	a)source $filesdir/multi_apk;;
+		b)one_apk;;
+		c)abi_apk;;
+		*);;
+esac
+	
 }
 
 abi_apk() {
-r_action='apkmenu'
+	
+r_action() {
+	apkmenu
+}
 
-	file_action=\
-	'mkdir /mnt/"$filename"
+	file_action() {
+	mkdir /mnt/"$filename"
 	cd /mnt/"$filename"
 	7z x "$filepath/$filename" 
 	
-
+	lib_abi_list=()
 	while read -r line; do
     lib_abi_list+=($line $line)
 	done < <( ls ./lib )
@@ -53,10 +59,12 @@ r_action='apkmenu'
 	                "${lib_abi_list[@]}" \
 	                2>&1 >/dev/tty)
 	
-	cp "$filepath/$filename" /data/local/tmp/ 
-	pm install --abi $abi_choice "/data/local/tmp/$filename"  
+	cd "$filepath" 
+	pm install --abi $abi_choice "$filename"
+	sleep 2
 	
-	'
+	}
+
 	startdir=/sdcard
 	filext='.apk'
 	menutitle="Apk Selection Menu"
@@ -68,12 +76,17 @@ one_apk() {
 startdir=/sdcard
 filext='.apk'
 menutitle="APK Selection Menu"
-file_action=\
-'cp "$filepath/$filename" /data/local/tmp/
-pm install "/data/local/tmp/$filename"'
-r_action=apkmenu
-source $filesdir/filebrowse.sh
+
+file_action() {
+cd "$filepath"
+pm install "$filename"
 }
 
+r_action() {
+	apkmenu
+}
+
+source $filesdir/filebrowse.sh
+}
 
 apkmenu

@@ -45,7 +45,7 @@ function Filebrowser()
           if [[ $selection == *$filext ]]; then   # Check if selected File has .jpg extension
             if (dialog --title "Confirm Selection" --yes-label "Confirm" --no-label "Retry" --yesno "Location : $curdir\nFileName:$selection" 7 45); then
                 filename="$selection"
-                filepath="$curdir"    # Return full filepath  and filename as selection variables
+                filepath="$curdir"   
             else
                 Filebrowser "$1" "$curdir"
             fi
@@ -68,9 +68,9 @@ Filebrowser "$menutitle" "$startdir"
 exitstatus=$?
 if [ $exitstatus -eq 0 ]; then
     if [ "$selection" == "" ]; then
-	eval "$r_action"
+	r_action
     else
-    eval "$file_action"
+    file_action
 	fi  
 fi
 

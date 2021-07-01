@@ -37,7 +37,8 @@ function Filebrowser()
     RET=$?
 	if [ $RET = 3 ]; then
      
-     dialog --title "$curdir" --yes-label "Current" --no-label "subfolders" --yesno "Do you want to install apk in current folder or find in subfolders also?" 10 45;
+     dialog --yes-label "Current" --no-label "subfolders" --yesno "Selected folder: $curdir\n
+     Do you want to install apk in current folder or find in subfolders also?" 10 45;
         case $? in 
             0)
              cd "$curdir"
@@ -47,9 +48,11 @@ function Filebrowser()
             *)
 
             if (dialog --title "Do you want to specify maxdepth?" --yesno "You can specify maxdepth, so it will only find apk in that level of subfolders depth, choose no to find all" 9 55); then
-	 i=$(dialog --title "Enter only a number" --inputbox \
+	 user_input=$(dialog --title "Enter only a number" --inputbox \
 		 	"Enter maxdepth, level of subfolders to find apk" 7 45 3>&2 2>&1 1>&3)
 
+             i=${user_input//[^a-zA-Z-_,.]/1}
+ 
             DIRS=( $(find "$curdir" -maxdepth $i -iname '*.apk') ) 
             else
             DIRS=( $(find "$curdir" -iname '*.apk') ) 
@@ -71,10 +74,11 @@ function Filebrowser()
 cat <<EOF
 XXX
 $PCT
-$f...
+copying "$f" to /data/local/tmp/
 XXX
 EOF
   # copy file $f to $DEST 
+  echo $f; sleep 1
   cp "$f" /data/local/tmp/ &>/dev/null
    done
 )
@@ -96,11 +100,12 @@ $PCT
 $f...
 XXX
 EOF
-  
+    echo $f; sleep 1
   pm install "$f" &>/dev/null
+  rm "$f"
    done
 )
-dialog --msgbox "Delete copied apks in /data/local/tmp if needed" 7 45 && exit
+
 
 	fi
 
