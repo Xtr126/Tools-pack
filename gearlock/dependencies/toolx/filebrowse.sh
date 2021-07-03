@@ -6,10 +6,26 @@ function Filebrowser()
 {
 
     if [ -z $2 ] ; then
-        dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
+        
+
+        dir_list=()
+        while read -r line; do
+
+            file=$(echo $line | awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print s }')
+            size=$(echo $line | awk '{print $5}')
+            dir_list+=("$file" $size)
+
+        done < <( ls -lhp )
     else
         cd "$2"
-        dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
+        dir_list=()
+        while read -r line; do
+
+            file=$(echo $line | awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print s }')
+            size=$(echo $line | awk '{print $5}')
+            dir_list+=("$file" $size)
+
+        done < <( ls -lhp )
     fi
 	HEIGHT=20
 	WIDTH=60

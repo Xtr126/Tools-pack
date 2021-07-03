@@ -62,13 +62,15 @@ r_action() {
 	abi_choice=$(dialog --clear --cancel-label "Exit" \
 	                --backtitle "$BACKTITLE" \
 	                --menu "$MENU" \
-	                0 60 0 \
-	                "${lib_abi_list[@]}" \
+	                0 60 4 \
+	                ${lib_abi_list[@]} \
 	                2>&1 >/dev/tty)
+
+					[ $? -eq 1 ] && Loader
 	
 	cd "$filepath" 
-	pm install --abi $abi_choice "$filename"
-	sleep 2
+	pm install --abi $abi_choice "$filename" && sleep 2
+	
 	
 	}
 

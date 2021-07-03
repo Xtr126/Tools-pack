@@ -1,18 +1,18 @@
 #!/gearlock/bin/bash
-if (dialog --yesno "Do you want to install zsh shell in alt+f8 terminal?" 9 55); then
+if (dialog --yesno "Do you want to install zsh shell in alt+f8 terminal?" 7 45); then
   [ ! -f /data/data/com.termux/files/usr/bin/zsh ] && \
-  dialog --msgbox "Install zsh with termux first" 5 45 && exit	
+  dialog --msgbox "Install zsh with termux first" 5 45 && Loader	
 fi
 
-if (dialog --yesno "Do you want to install fish shell in alt+f8 terminal?" 9 55); then
+if (dialog --yesno "Do you want to install fish shell in alt+f8 terminal?" 7 45); then
   [ ! -f /data/data/com.termux/files/usr/bin/fish ] && \
-  dialog --msgbox "Install fish shell with termux first" 5 45 && exit	
+  dialog --msgbox "Install fish shell with termux first" 5 45 && Loader
 
 fi
 
-if (dialog --yesno "Do you want to install python shell in alt+f8 terminal?" 9 55); then
+if (dialog --yesno "Do you want to install python shell in alt+f8 terminal?" 7 45); then
   [ ! -f /data/data/com.termux/files/usr/bin/python ] && \
-  dialog --msgbox "Install python with termux first" 5 45 && exit	
+  dialog --msgbox "Install python with termux first" 5 45 && Loader
 
 fi
 

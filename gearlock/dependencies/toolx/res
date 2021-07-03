@@ -1,20 +1,20 @@
 #!/gearlock/bin/bash
 
-if [ -d /tmp ]; then
-    tmp_dir=/tmp
-else
-    tmp_dir=/mnt
-fi
 
-if (dialog --yes-label "Extract" --no-label "Repack" \ 
---yesno "Extract framework-res to modify icons/drawables, after done editing the files then repack, will add new files to /system/framework/framework-res.apk" 7 45); then
-				mkdir $tmp_dir/framework-res/
+
+if (dialog --yes-label "Extract" --no-label "Repack" --yesno "Extract framework-res to modify icons/drawables, after done editing the files then repack, will add new files to /system/framework/framework-res.apk" 7 60); then
+				if [ -d /tmp ]; then
+                    tmp_dir=/tmp
+                else
+                    tmp_dir=/mnt
+                fi
+                mkdir $tmp_dir/framework-res/
                 7z x /system/framework/framework-res.apk -o$tmp_dir/framework-res/
                 mkdir -p /sdcard/framework
                 cp -r $tmp_dir/framework-res/res /sdcard/framework/
                 rm -rf $tmp_dir/framework-res
-                dialog --msgbox "Sucessfully extracted to /sdcard/framework-res, modify as you want and repack from this extension"
-        
+                dialog --msgbox "Sucessfully extracted to /sdcard/framework-res, modify the icons as you want and then repack from this extension" 7 45
+                Loader
         else
                 cd /sdcard/framework
 
@@ -28,5 +28,5 @@ if (dialog --yes-label "Extract" --no-label "Repack" \
                     dialog --gauge \
                     "Installing patched system framework" 7 45
                     rm framework-res.apk
-
+                Loader
         fi

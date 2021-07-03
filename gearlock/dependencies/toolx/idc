@@ -110,7 +110,7 @@ area- the size is assumed to be proportional to the area of the touch or tool." 
 									
 				i=0
 				OPTIONS=()
-				while read -r line; do # process file by file
+				while read -r line; do 
 				let i=$i+1
 				OPTIONS+=($line $i)
 				done < <( lsmod | awk '{print $1}' )
