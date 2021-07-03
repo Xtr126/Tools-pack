@@ -11,7 +11,7 @@ function Main_menu() {
 	MENU="Misc tools"
 
 	OPTIONS=(1 "Find and batch install all apks in folder"
-	         2 "Extract gxp or other archive"
+	         2 "Extract gxp/any archive to RAM(faster)"
 	         3 "Disable/enable boot animation"
 	         4 "Make gxp"
 			 5 "Change boot sound(only .wav)"
@@ -36,6 +36,7 @@ function Main_menu() {
 				gearprop "debug.sf.nobootanimation 1"
 			else 
 				gearprop "debug.sf.nobootanimation 0"
+            fi
 		;;
 		4)source $filesdir/gxp;;
 		5)source $filesdir/bootsound;;

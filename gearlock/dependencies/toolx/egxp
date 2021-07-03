@@ -10,7 +10,7 @@ fi
 dialog --title "Warning" \
 --ok-label "I read and understand" \
 --msgbox "This doesnt extract archive to hard disk like other programs
-It will extract files to RAM, so dont extract large archives which will fill your RAM and make the OS crash
+It will extract files to RAM (faster), so dont extract large archives which will fill your RAM and make the OS crash
 Archives or gxp are extracted to $tmp_dir/<archive name> which is tmpfs ($tmp_dir/ is a folder in which files are stored in RAM, lost after reboot, in recovery mode /tmp)" \
 13 60
 
@@ -22,6 +22,7 @@ menutitle="Archive Selection Menu"
 file_action() {
 mkdir $tmp_dir/$filename
 7z x "$filepath/$filename" -o$tmp_dir/$filename
+dialog --msgbox "Archive extracted to $tmp_dir/$filename" 7 45
 }
 
 r_action() {
@@ -29,3 +30,4 @@ r_action() {
 }
 
 source $filesdir/filebrowse.sh 
+Loader

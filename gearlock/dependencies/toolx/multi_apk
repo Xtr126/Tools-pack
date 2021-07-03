@@ -49,9 +49,9 @@ function Filebrowser()
 
             if (dialog --title "Do you want to specify maxdepth?" --yesno "You can specify maxdepth, so it will only find apk in that level of subfolders depth, choose no to find all" 9 55); then
 	 user_input=$(dialog --title "Enter only a number" --inputbox \
-		 	"Enter maxdepth, level of subfolders to find apk" 7 45 3>&2 2>&1 1>&3)
+		 	"Enter maxdepth, level of subfolders to find apk" 8 45 3>&2 2>&1 1>&3)
 
-             i=${user_input//[^a-zA-Z-_,.]/1}
+             i=${user_input//[^0-9]/1}
  
             DIRS=( $(find "$curdir" -maxdepth $i -iname '*.apk') ) 
             else
@@ -63,48 +63,29 @@ function Filebrowser()
             ;;
         esac
 
-        dialog --gauge "Copying apk" 6 55 < <(
+        dialog --gauge "Installing apk" 9 55 < <(
    n=${#DIRS[*]}; 
    i=0
    for f in "${DIRS[@]}"
    do
+   dir=$(dirname "$f")
+     cd ${dir} 
       # calculate progress
       PCT=$(( 100*(++i)/n ))
       # update dialog box 
 cat <<EOF
 XXX
 $PCT
-copying "$f" to /data/local/tmp/
+$(pwd)
+${f##*/}
 XXX
 EOF
-  # copy file $f to $DEST 
-  echo $f; sleep 1
-  cp "$f" /data/local/tmp/ &>/dev/null
+  sleep 1
+  pm install "${f##*/}"
    done
 )
 
-cd /data/local/tmp/
 
-APKS=( *.apk )
-dialog --gauge "Installing apk" 6 55 < <(
-   n=${#APKS[*]}; 
-   i=0
-   for f in "${APKS[@]}"
-   do
-      # calculate progress
-      PCT=$(( 100*(++i)/n ))
-      # update dialog box 
-cat <<EOF
-XXX
-$PCT
-$f...
-XXX
-EOF
-    echo $f; sleep 1
-  pm install "$f" &>/dev/null
-  rm "$f"
-   done
-)
 
 
 	fi

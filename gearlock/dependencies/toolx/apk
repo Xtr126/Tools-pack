@@ -1,5 +1,12 @@
 #!/gearlock/bin/bash
 
+
+if [ -d /tmp ]; then
+    tmp_dir=/tmp
+else
+    tmp_dir=/mnt
+fi
+
 function apkmenu() {
 	HEIGHT=0
 	WIDTH=60
@@ -25,7 +32,7 @@ case $CHOICE in
     	a)source $filesdir/multi_apk;;
 		b)one_apk;;
 		c)abi_apk;;
-		*);;
+		*)Loader;;
 esac
 	
 }
@@ -37,8 +44,8 @@ r_action() {
 }
 
 	file_action() {
-	mkdir /mnt/"$filename"
-	cd /mnt/"$filename"
+	mkdir ${tmp_dir}/"$filename"
+	cd ${tmp_dir}/"$filename"
 	7z x "$filepath/$filename" 
 	
 	lib_abi_list=()
@@ -46,7 +53,7 @@ r_action() {
     lib_abi_list+=($line $line)
 	done < <( ls ./lib )
     
-	rm -rf /mnt/"$filename"
+	rm -rf ${tmp_dir}/"$filename"
 
 	MENU="Choose which architecture to install this apk
 			The following abi are supported by your Android x86 
