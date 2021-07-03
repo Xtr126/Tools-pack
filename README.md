@@ -1,6 +1,6 @@
 
 # Apk installer
-Features 
+
 Install a single apk fast with pm
 
 Install multiple apk from a folder, choose to find apk in subfolders or current folder only, if finding in subfolders then specify depth if needed or Install all apks in all subfolders
