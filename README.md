@@ -5,7 +5,7 @@ Install a single apk fast with pm
 
 Install multiple apk from a folder, choose to find apk in subfolders or current folder only, if finding in subfolders then specify depth if needed or Install all apks in all subfolders
 
-Install APK for specific architecture, using pm install --abi <armeabi-v7a|arm64-v8a|x86|x86_64> file.apk
+Install APK for specific architecture, using pm install --abi < armeabi-v7a | arm64-v8a | x86 | x86_64 > file.apk
 Might help for apk which have broken x86
 
 # Archive Extracter
