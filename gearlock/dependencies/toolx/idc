@@ -109,16 +109,12 @@ area- the size is assumed to be proportional to the area of the touch or tool." 
 				
 									
 				i=0
-				OPTIONS=()
-				while read -r line; do 
-				let i=$i+1
-				OPTIONS+=($line $i)
-				done < <( lsmod | awk '{print $1}' )
-				    HEIGHT=0
+				OPTIONS=( $( lsmod | awk '{print $1}') )
+				    HEIGHT=20
 					WIDTH=45
-					CHOICE_HEIGHT=0
+					CHOICE_HEIGHT=20
 				MENU="select kernel module to unload and reload"
-				CHOICE=$(dialog --clear --cancel-label "Exit" \
+				CHOICE=$(dialog --clear --no-items --cancel-label "Exit" \
 								--backtitle "$BACKTITLE" \
 								--title "$TITLE" \
 								--menu "$MENU" \
