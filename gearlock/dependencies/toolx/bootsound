@@ -21,25 +21,20 @@ menutitle="Boot sound Selection Menu"
 function Filebrowser()
 {
 
-if [ -z $2 ] ; then
-        dir_list=()
-        while read -r line; do
+    do_list_dir(){
 
-            file=$(echo $line | awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print s }')
-            size=$(echo $line | awk '{print $5}')
-            dir_list+=("$file" $size)
+for f in *\ *; do mv "$f" "${f// /_}"; done
+ dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
+  
+    }
 
-        done < <( ls -lhp )
+    if [ -z $2 ] ; then
+      
+		do_list_dir
     else
-        cd "$2"
-        dir_list=()
-        while read -r line; do
-
-            file=$(echo $line | awk '{ s = ""; for (i = 9; i <= NF; i++) s = s $i " "; print s }')
-            size=$(echo $line | awk '{print $5}')
-            dir_list+=("$file" $size)
-
-        done < <( ls -lhp )
+        cd "$2" 
+        do_list_dir
+    
     fi
     
 	HEIGHT=20
