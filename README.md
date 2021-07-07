@@ -1,4 +1,4 @@
-
+Has a system settings changer and following features
 # Apk installer
 
 Install a single apk fast with pm
