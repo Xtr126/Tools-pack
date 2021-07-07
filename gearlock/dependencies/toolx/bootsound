@@ -14,14 +14,11 @@ filext='.wav'
 menutitle="Boot sound Selection Menu"
 
 
-
-
-
 #------------------------------------------------------------------------------
 function Filebrowser()
 {
 
-    do_list_dir(){
+ do_list_dir(){
 
 for f in *\ *; do mv "$f" "${f// /_}"; done
  dir_list=($(ls -lhp  | awk -F ' ' ' { print $9 " " $5 } '))
@@ -50,12 +47,12 @@ for f in *\ *; do mv "$f" "${f// /_}"; done
                               "${dir_list[@]}" 3>&1 1>&2 2>&3)
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(dialog --title "$1" \
+        --extra-button --extra-label PlaySound \
 							  --ok-label ApplySound \
 							  --cancel-label Cancel \
-							  --extra-button --extra-label PlaySound \
                               --menu "$curdir" \
 							  $HEIGHT $WIDTH $CHOICE_HEIGHT \
-                              '../' "Go back one directory"
+                              '../' "Go back one directory" \
                               "${dir_list[@]}" 3>&1 1>&2 2>&3)
     fi
 

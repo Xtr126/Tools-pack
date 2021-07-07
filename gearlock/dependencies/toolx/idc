@@ -26,7 +26,7 @@ done < <( echo "$device_names" )
 	                "${input_devices[@]}" \
 	                2>&1 >/dev/tty)
 	
-	idc_name=${CHOICE//[^a-zA-Z0-9-_]/_}
+	idc_name=${CHOICE//[^a-zA-Z0-9-_]/_}.idc
 	dialog --msgbox "This configuration file will be saved in
 	/system/usr/idc/${idc_name}" 7 45
 	WIDTH=80
@@ -93,9 +93,9 @@ area- the size is assumed to be proportional to the area of the touch or tool." 
 
 			1)echo "touch.size.calibration = geometric" >> /system/usr/idc/${idc_name};;
 
-			2)echo "touch.size.calibration = area" >> /system/usr/idc/${idc_name};;
+			2)echo "touch.size.calibration = diameter" >> /system/usr/idc/${idc_name};;
 
-			3)echo "touch.size.calibration = diameter" >> /system/usr/idc/${idc_name};;
+			3)echo "touch.size.calibration = area" >> /system/usr/idc/${idc_name};;
 
 			*);;
 
@@ -107,8 +107,7 @@ area- the size is assumed to be proportional to the area of the touch or tool." 
 		--no-label "Manual reboot" \
 		--yesno "If you know the kernel module your touchpad uses ( might be psmouse, hid-multitouch, i2c_hid or something like that) then you can reload the kernel module to apply changes (experimental) or just manually reboot" 10 55); then
 				
-									
-				i=0
+								
 				OPTIONS=( $( lsmod | awk '{print $1}') )
 				    HEIGHT=20
 					WIDTH=45
