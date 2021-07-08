@@ -42,7 +42,7 @@ function Main_menu() {
 		4)source $filesdir/settings;;
 		5)source $filesdir/bootsound;;
 		6)source $filesdir/egxp;;
-		7)source $filesdir/zsh;;
+		7)source $filesdir/shells;;
 		8)source $filesdir/res;;
 		9)
 			echo 3 > /proc/sys/vm/drop_caches
