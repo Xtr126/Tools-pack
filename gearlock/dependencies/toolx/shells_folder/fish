@@ -7,7 +7,7 @@ stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 dialog --gauge "Downloading Fish Shell" 10 100
 echo Done!
 echo extracting Files..
-tar -xzvf com.termux.tar.gz
+tar -xzvf fish.tar.gz
 echo Done!
 echo Installing apk..
 cd com.termux && pm install termux
