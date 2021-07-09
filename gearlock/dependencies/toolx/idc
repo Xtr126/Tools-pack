@@ -101,6 +101,14 @@ area- the size is assumed to be proportional to the area of the touch or tool." 
 
 		esac
 
+CHOICE=$(dialog --clear --no-items --cancel-label "Exit" \
+	                --backtitle "$BACKTITLE" \
+	                --menu " " \
+	                10 60 10 \
+	                "touch.sizeAware = 0" \
+	                "touch.sizeAware = 1" \
+	                2>&1 >/dev/tty)
+	                echo "$CHOICE" >> /system/usr/idc/${idc_name}
 
 		if (dialog --title "Apply changes" \
 		--yes-label "Reload module" \

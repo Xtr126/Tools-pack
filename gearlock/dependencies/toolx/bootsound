@@ -48,7 +48,7 @@ for f in *\ *; do mv "$f" "${f// /_}"; done
     else   # Not Root Dir so show ../ BACK Selection in Menu
         selection=$(dialog --title "$1" \
         --extra-button --extra-label PlaySound \
-							  --ok-label ApplySound \
+							  --ok-label Go/ApplySound \
 							  --cancel-label Cancel \
                               --menu "$curdir" \
 							  $HEIGHT $WIDTH $CHOICE_HEIGHT \

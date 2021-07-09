@@ -37,7 +37,7 @@ cd $GHOME; mv workdir workdir.backup; mkdir workdir
 mv -t "$GHOME/workdir/" $tmp_dir/gxp_files/*
 rm -r $tmp_dir/gxp_files
 
-dialog --msgbox "Now go to gearlock > more > 3 dev zone > 2 Build & pack the custom package" 7 45
+dialog --msgbox "Now go to gearlock > more > 3 dev zone > 2 Build & pack the custom package, original workdir was renamed to workdir.backup" 7 50
 
 
 

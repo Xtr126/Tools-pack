@@ -86,7 +86,7 @@ cat <<EOF
 XXX
 $PCT
 $(pwd)
-${f##*/}
+Installing ${f##*/}...
 XXX
 EOF
   sleep 1
