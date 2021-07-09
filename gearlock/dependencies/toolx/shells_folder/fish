@@ -1,5 +1,5 @@
 #!/gearlock/bin/bash
-if (dialog --yesno "Do you want to download and install zsh shell in alt+f8 terminal?" 7 45); then
+if (dialog --yesno "Do you want to download and install FISH shell in alt+f8 terminal?" 7 45); then
 cd /data/data/
 URL="https://www.dropbox.com/s/omchrahrobnbf3g/fish.tar.gz"
 /gearlock/bin/wget  "$URL" --no-check-certificate 2>&1 | \
@@ -10,7 +10,7 @@ echo extracting Files..
 tar -xzvf fish.tar.gz
 echo Done!
 echo Installing apk..
-cd com.termux && pm install termux
+cd com.termux && pm install termux.apk
 echo Done!
 echo Linking Files...
 ln -s /data/data/com.termux/files/usr/bin/fish /system/bin/ # this will be ok i hope..
