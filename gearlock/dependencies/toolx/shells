@@ -19,9 +19,9 @@ function shell_menu() {
 	                2>&1 >/dev/tty)
 
     case $CHOICE in
-    	1)bash shells_folder/fish;;
-		2)bash shells_folder/zsh;;
-		3)bash shells_folder/python;;
+    	1)bash /system/ghome/dependencies/toolx/shells_folder/fish;;
+		2)bash /system/ghome/dependencies/toolx/shells_folder/zsh;;
+		3)bash /system/ghome/dependencies/toolx/shells_folder/python;;
 		*);;
 	esac
 }
