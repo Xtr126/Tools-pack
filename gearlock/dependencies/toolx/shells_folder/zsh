@@ -1,7 +1,7 @@
 #!/gearlock/bin/bash
 if (dialog --yesno "Do you want to download and install ZSH shell in alt+f8 terminal?" 7 45); then
 cd /data/data/
-URL=""
+URL="https://www.dropbox.com/s/4hrc0gbq1hhra3o/zsh.tar.gz"
 /gearlock/bin/wget  "$URL" --no-check-certificate 2>&1 | \
 stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 dialog --gauge "Downloading Python Shell" 10 100
