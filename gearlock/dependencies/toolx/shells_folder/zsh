@@ -9,9 +9,6 @@ echo Done!
 echo extracting Files..
 tar -xzvf zsh.tar.gz
 echo Done!
-echo Installing apk..
-cd com.termux && pm install termux.apk
-echo Done!
 echo Linking Files...
 ln -s /data/data/com.termux/files/usr/bin/zsh /system/bin/
 dialog --msgbox "Install Successfull!!.." 5 45
