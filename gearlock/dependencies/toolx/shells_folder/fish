@@ -1,18 +1,15 @@
 #!/gearlock/bin/bash
-if (dialog --yesno "Do you want to download and install zsh shell in alt+f8 terminal?" 7 45); then
+if (dialog --yesno "Do you want to download and install FISH shell in alt+f8 terminal?" 7 45); then
 cd /data/data/
-URL=""
-/gearlock/bin/wget "$URL" 2>&1 | \
+URL="https://www.dropbox.com/s/gg3njuc4oh165tu/fish.tar.gz"
+/gearlock/bin/wget  "$URL" --no-check-certificate 2>&1 | \
 stdbuf -o0 awk '/[.] +[0-9][0-9]?[0-9]?%/ { print substr($0,63,3) }' | \
 dialog --gauge "Downloading Fish Shell" 10 100
 echo Done!
 echo extracting Files..
-tar -xzvf com.termux.tar.gz
-echo Done!
-echo Installing apk..
-cd com.termux && pm install termux
+tar -xzvf fish.tar.gz
 echo Done!
 echo Linking Files...
-ln -s /data/data/com.termux/files/usr/bin/fish /system/bin/ # this will be ok i hope..
+ln -s /data/data/com.termux/files/usr/bin/fish /system/bin/
 dialog --msgbox "Install Successfull!!.." 5 45
 fi

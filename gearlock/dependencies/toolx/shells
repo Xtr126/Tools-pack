@@ -7,8 +7,8 @@ function shell_menu() {
 	TITLE="Install Custom Shells"
 	MENU="Install Custom Shells"
 
-	OPTIONS=(1 "zsh shell"
-			 2 "fish shell"
+	OPTIONS=(1 "Fish shell"
+			 2 "Zsh shell"
 	     	 3 "python shell")
 
 	CHOICE=$(dialog --clear --cancel-label "Exit" \
@@ -19,29 +19,10 @@ function shell_menu() {
 	                2>&1 >/dev/tty)
 
     case $CHOICE in
-    	1)bash shells/zsh;;
-		2)bash shells/fish;;
-		3)bash shells/python;;
+    	1)bash /system/ghome/dependencies/toolx/shells_folder/fish;;
+		2)bash /system/ghome/dependencies/toolx/shells_folder/zsh;;
+		3)bash /system/ghome/dependencies/toolx/shells_folder/python;;
 		*);;
 	esac
 }
 shell_menu
-# if (dialog --yesno "Do you want to install zsh shell in alt+f8 terminal?" 7 45); then
-#   [ ! -f /data/data/com.termux/files/usr/bin/zsh ] && \
-#   dialog --msgbox "Install zsh with termux first" 5 45 && Loader	
-# fi
-
-# if (dialog --yesno "Do you want to install python shell in alt+f8 terminal?" 7 45); then
-#   [ ! -f /data/data/com.termux/files/usr/bin/python ] && \
-#   dialog --msgbox "Install python with termux first" 5 45 && Loader
-
-# fi
-
-
-if [ -d /data/data/com.termux ]
-then
-mv -t "/data/data/com.termux/files/usr/bin/" $GHOME/.local/bin/*
-rm -rf $GHOME/.local/bin
-ln -s /data/data/com.termux/files/usr/bin $GHOME/.local/bin
-dialog --msgbox "symlinked termux to gearlock, you can access termux from alt+f8 terminal, type fish or zsh python and enter in alt+f8 terminal" 7 45
-fi
