@@ -13,6 +13,6 @@ echo Installing apk..
 cd com.termux && pm install termux.apk
 echo Done!
 echo Linking Files...
-ln -s /data/data/com.termux/files/usr/bin/python /system/bin/ # this will be ok i hope..
+ln -s /data/data/com.termux/files/usr/bin/python /system/bin/
 dialog --msgbox "Install Successfull!!.." 5 45
 fi
