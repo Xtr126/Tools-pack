@@ -34,7 +34,7 @@ function Main_menu() {
 		3)	animation_on="
 		debug.sf.nobootanimation 0
 		"
-		3)	animation_off="
+		animation_off="
 		debug.sf.nobootanimation 1
 		"
 		
