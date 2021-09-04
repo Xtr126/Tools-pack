@@ -31,12 +31,18 @@ function Main_menu() {
     case $CHOICE in
     	1)source $filesdir/apk;;
 		2)source $filesdir/idc;;
-		3)	
+		3)	animation_on="
+		debug.sf.nobootanimation 0
+		"
+		3)	animation_off="
+		debug.sf.nobootanimation 1
+		"
+		
 			if (dialog --yes-label Disable --no-label Enable \
 			--yesno "Disables boot animation with build.prop line, useful for fast boot/ SSD" 7 45); then
-				gearprop "debug.sf.nobootanimation 1"
+				gearprop "$animation_off"
 			else 
-				gearprop "debug.sf.nobootanimation 0"
+				gearprop "$animation_on"
             fi
 		;;
 		4)source $filesdir/settings;;
@@ -44,8 +50,16 @@ function Main_menu() {
 		6)source $filesdir/egxp;;
 		7)source $filesdir/zsh;;
 		8)source $filesdir/res;;
-		9)
+			
+			
+		9)	
+		mem_free="$(free -h)"
+		geco "${YELLOW}Memory usage before cleaning :${RC}"
+		geco "${RED}$mem_free${RC}"
 			echo 3 > /proc/sys/vm/drop_caches
+		
+			geco "${GREEN}Memory usage after cleaning :${RC}"
+		free -h
 		;;
 		10)source $filesdir/gxp;;
 		*);;
