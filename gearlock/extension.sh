@@ -38,7 +38,7 @@ Main_menu() {
 				update_value debug.sf.nobootanimation 1
 			else 
 				update_value debug.sf.nobootanimation 0
-            fi
+            		fi
 		;;
 		4)source $filesdir/settings;;
 		5)source $filesdir/bootsound;;
@@ -48,16 +48,15 @@ Main_menu() {
 			
 			
 		9)	
-		mem_free="$(free -h)"
 		geco "${YELLOW}Memory usage before cleaning :${RC}"
-		geco "${RED}$mem_free${RC}"
+		geco "${RED}$(free -h)${RC}"
 			echo 3 > /proc/sys/vm/drop_caches
 		
 			geco "${GREEN}Memory usage after cleaning :${RC}"
 		geco "${CYAN}$(free -h)${RC}"
 		;;
 		10)source $filesdir/gxp;;
-		*);;
+		*)exit;;
 	esac
 }
 
@@ -71,27 +70,18 @@ update_value(){
 
 }
 
-Loader() {
-
-	PCT=0
-	(
-	while test $PCT != 105;	do
-			cat <<EOF
-			XXX
-			$PCT
-			$(figlet ToolPack)
-			. . . Made by Xtr  //
-			XXX
-			EOF
-			PCT=`expr $PCT + 5`
-			sleep 0.05
-		done
-	) |
-
-	dialog --no-collapse --gauge "Hi, thanks" 12 45 0; sleep 0.5
-	Main_menu
-
-}
-
-
-Loader
+PCT=0
+(
+while test $PCT != 105;	do
+cat <<EOF
+XXX
+$PCT
+$(figlet ToolPack)
+. . . by Xtr  //
+XXX
+EOF
+PCT=`expr $PCT + 5`
+sleep 0.05
+done
+) | dialog --no-collapse --gauge "Hi, thanks" 12 45 0; sleep 0.5
+Main_menu
