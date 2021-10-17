@@ -36,7 +36,7 @@ CHOICE=$(dialog --clear --no-items --cancel-label "Exit" \
              current value : $current_value
              enter new value" 8 45 3>&2 2>&1 1>&3)
 
-             settings put $n "${user_input}" 
+             settings put $n "${CHOICE}" "${user_input}" 
              Loader
 
     
