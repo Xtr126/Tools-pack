@@ -69,7 +69,7 @@ update_value(){
 	fi
 
 }
-
+Loader(){
 PCT=0
 (
 while test $PCT != 105;	do
@@ -84,4 +84,6 @@ PCT=`expr $PCT + 5`
 sleep 0.05
 done
 ) | dialog --no-collapse --gauge "Hi, thanks" 12 45 0; sleep 0.5
+}
+Loader
 Main_menu
