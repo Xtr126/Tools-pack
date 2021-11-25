@@ -58,6 +58,7 @@ Main_menu() {
 		10)source $filesdir/gxp;;
 		*)exit;;
 	esac
+	[ $? -eq 0 ] && exit || Main_menu
 }
 
 update_value(){ 
@@ -84,6 +85,7 @@ PCT=`expr $PCT + 5`
 sleep 0.05
 done
 ) | dialog --no-collapse --gauge "Hi, thanks" 12 45 0; sleep 0.5
+Main_menu
 }
 Loader
-Main_menu
+
